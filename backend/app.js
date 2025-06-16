@@ -3,6 +3,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 const bookRoutes = require('./routes/book')
+const userRoutes = require('./routes/user');
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -18,5 +20,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/book', bookRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
