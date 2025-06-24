@@ -84,7 +84,17 @@ function BookForm({ book, validate }) {
       </label>
       <label htmlFor="year">
         <p>Année de publication</p>
-        <input type="text" id="year" {...register('year')} />
+        <input
+          type="number"
+          id="year"
+          min="1000"
+          max="2024"
+          {...register('year', {
+            required: 'L\'année est requise',
+            min: { value: 1000, message: 'L\'année doit être supérieure à 1000' },
+            max: { value: 2024, message: 'L\'année ne peut pas dépasser 2024' },
+          })}
+        />
       </label>
       <label htmlFor="genre">
         <p>Genre</p>

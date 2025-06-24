@@ -115,11 +115,18 @@ export async function rateBook(id, userId, rating) {
 
 export async function addBook(data) {
   const userId = localStorage.getItem('userId');
+
+  // Validation et conversion de l'année
+  const year = parseInt(data.year, 10);
+  if (Number.isNaN(year) || year < 1000 || year > 2024) {
+    return { error: true, message: 'L\'année doit être un nombre valide entre 1000 et 2024' };
+  }
+
   const book = {
     userId,
     title: data.title,
     author: data.author,
-    year: data.year,
+    year,
     genre: data.genre,
     ratings: [{
       userId,
@@ -127,6 +134,7 @@ export async function addBook(data) {
     }],
     averageRating: parseInt(data.rating, 10),
   };
+
   const bodyFormData = new FormData();
   bodyFormData.append('book', JSON.stringify(book));
   bodyFormData.append('image', data.file[0]);
@@ -141,7 +149,7 @@ export async function addBook(data) {
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error('addBook Error:', err.response?.data || err.message);
     return { error: true, message: err.message };
   }
 }

@@ -22,7 +22,10 @@ exports.createBook = (req, res, next) => {
     // Enregistrement dans la base de données
     book.save()
         .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
-        .catch(error => { res.status(400).json( { error }) })
+        .catch(error => { 
+            console.error('createBook Save Error:', error);
+            res.status(400).json( { error }) 
+        })
 };
 
 // GET => Récupération d'un livre spécifique
