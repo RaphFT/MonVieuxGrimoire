@@ -1,4 +1,3 @@
-const fs = require('fs');
 const Book = require('../models/Book');
 const { cleanupOldFiles } = require('../middleware/upload');
 
