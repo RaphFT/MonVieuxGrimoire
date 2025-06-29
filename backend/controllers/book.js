@@ -164,7 +164,8 @@ exports.createRating = (req, res) => {
 
       book.ratings.push(newRating);
       const totalRating = book.ratings.reduce((sum, r) => sum + r.grade, 0);
-      book.averageRating = totalRating / book.ratings.length;
+      // Calcul de la moyenne avec limitation à 2 décimales
+      book.averageRating = Math.round((totalRating / book.ratings.length) * 100) / 100;
 
       return book.save();
     })
