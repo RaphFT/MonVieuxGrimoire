@@ -32,16 +32,13 @@ function SignIn({ setUser }) {
       });
       if (!response?.data?.token) {
         setNotification({ error: true, message: 'Une erreur est survenue' });
-        console.log('Something went wrong during signing in: ', response);
       } else {
         storeInLocalStorage(response.data.token, response.data.userId);
         setUser(response.data);
         navigate('/');
       }
     } catch (err) {
-      console.log(err);
       setNotification({ error: true, message: err.message });
-      console.log('Some error occured during signing in: ', err);
     } finally {
       setIsLoading(false);
     }
@@ -59,13 +56,11 @@ function SignIn({ setUser }) {
         },
       });
       if (!response?.data) {
-        console.log('Something went wrong during signing up: ', response);
         return;
       }
       setNotification({ error: false, message: 'Votre compte a bien été créé, vous pouvez vous connecter' });
     } catch (err) {
-      setNotification({ error: true, message: err.message });
-      console.log('Some error occured during signing up: ', err);
+      setNotification({ error: true, message: err.response?.data?.error || err.message });
     } finally {
       setIsLoading(false);
     }
